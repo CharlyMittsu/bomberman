@@ -8,10 +8,13 @@ public class BombScript : MonoBehaviour
     private float lifespan;
     private float life;
     private bool dead;
+    [SerializeField]
+    private GameObject explosionPrefab;
     // Start is called before the first frame update
     void Start()
     {
         life = lifespan;
+
     }
 
     // Update is called once per frame
@@ -27,20 +30,14 @@ public class BombScript : MonoBehaviour
             dead = true;
             StartCoroutine(BlowUp());
         }
+        
     }
     private IEnumerator BlowUp()
     {
+        Instantiate(explosionPrefab,transform.position,Quaternion.identity,transform); 
         Debug.Log("EXPLOSION");
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        Debug.Log("Destroy");
-        if (collision.gameObject.tag == "Mur")
-        {
-            Debug.Log("Destroy");
-            Destroy(gameObject);
-        }
-    }
+   
 }

@@ -8,7 +8,7 @@ public class MovableObject : MonoBehaviour
     private float speed;
     public void Move(string direction)
     {
-        Debug.Log(direction);
+        //Debug.Log(direction);
         switch (direction)
         {
             case "left":
