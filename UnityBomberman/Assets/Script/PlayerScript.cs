@@ -7,9 +7,11 @@ public class PlayerScript : MovableObject
     [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
+    private LayerMask hitLayerBomb;
+    [SerializeField]
     private KeyCode _left ,_right, _up , _down, _leftMouse;
     [SerializeField]
-    private GameObject bombPrefab1;
+    private BombScript bombPrefab1;
     [SerializeField]
     private Vector2 facing;
     // Start is called before the first frame update
@@ -60,19 +62,22 @@ public class PlayerScript : MovableObject
     }
     private void CreateBomb()
     {
-        Instantiate(bombPrefab1, getCoordinateFacing(), Quaternion.identity);
+        
+        BombScript bomb = Instantiate(bombPrefab1, getCoordinateFacing(), Quaternion.identity);
+        bomb.range += 1;
 
     }
     private bool Check()
     {
         RaycastHit2D hit = Physics2D.Raycast(GetCoordinate(), facing, 1,hitLayer);
+        RaycastHit2D hitBomb = Physics2D.Raycast(GetCoordinate(), facing, 1, hitLayerBomb);
         Debug.DrawRay(GetCoordinate(), facing,Color.white,.2f);
         //Debug.Log(hit.transform.tag);
         
         //Debug.Log(hit.transform.tag );
 
         
-        return hit.collider && (hit.collider.tag == "Mur"|| hit.collider.tag == "MurCassable");
+        return hitBomb.collider || (hit.collider && (hit.collider.tag == "Mur"|| hit.collider.tag == "MurCassable"));
     }
     private Vector2 getCoordinateFacing()
     {

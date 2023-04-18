@@ -9,17 +9,21 @@ public class BombScript : MovableObject
 
     public int range;
     [SerializeField]
-    private float lifespan;
+    private float lifeSpan;
+    [SerializeField]
+    private float explosionLifeSpan;
     private float life;
     private bool dead;
-    private Color ColorSR;
+    [SerializeField]
+    private SpriteRenderer ColorSR;
     [SerializeField]
     private GameObject explosionPrefab;
+    
     // Start is called before the first frame update
     void Start()
     {
-        life = lifespan;
-        ColorSR = gameObject.GetComponent<SpriteRenderer>().color;
+        life = lifeSpan;
+        ColorSR = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -42,14 +46,14 @@ public class BombScript : MovableObject
         
         
         Debug.Log("EXPLOSION");
-        ColorSR.a = 0;
+        ColorSR.enabled = false;
 
         Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
         CreateExplosionLine(Vector2.left);
         CreateExplosionLine(Vector2.right);
         CreateExplosionLine(Vector2.up);
         CreateExplosionLine(Vector2.down);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(explosionLifeSpan);
         Destroy(gameObject);
     }
     private int GetRangeExplosionLine(Vector2 direction)
@@ -61,12 +65,14 @@ public class BombScript : MovableObject
 
         if (hit)
         {
-             x = (int)Mathf.Floor(Vector2.Distance(position, hit.point)) ;
+            x = (int)Mathf.Floor(Vector2.Distance(position, hit.point));
+                Debug.Log(hit.collider.tag);
+            
             if (hit.collider.tag== "MurCassable") { 
                 x++; 
             }
             
-            //Debug.DrawRay(position, direction*x, Color.white, 0.5f);
+            
             return x;
         }
         return range;
@@ -74,6 +80,7 @@ public class BombScript : MovableObject
     private void CreateExplosionLine(Vector2 direction)
     {
         var length = GetRangeExplosionLine(direction);
+        
         if (length == 0) { return; }
         for (int i = 1; i < length+1; i++)
         {
@@ -81,5 +88,13 @@ public class BombScript : MovableObject
             Instantiate(explosionPrefab, transform.position + vector, Quaternion.identity, transform);
         }
     }
-   
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Explosion"))
+        {
+            life = 0;
+        }
+
+    }
+
 }
