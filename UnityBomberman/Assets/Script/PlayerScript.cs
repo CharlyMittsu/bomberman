@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerScript : MovableObject
 {
+    
+    public int _bombRange;
+
     [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
@@ -64,7 +67,7 @@ public class PlayerScript : MovableObject
     {
         
         BombScript bomb = Instantiate(bombPrefab1, getCoordinateFacing(), Quaternion.identity);
-        bomb.range += 1;
+        bomb.range = _bombRange;
 
     }
     private bool Check()
