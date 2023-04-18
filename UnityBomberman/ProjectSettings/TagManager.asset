@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mur
   - Explosion
+  - MurCassable
   layers:
   - Default
   - TransparentFX

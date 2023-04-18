@@ -1559,7 +1559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  hitMask:
+  hitLayer:
     serializedVersion: 2
     m_Bits: 8
   _left: 113

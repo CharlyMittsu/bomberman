@@ -69,7 +69,7 @@ public class PlayerScript : MovableObject
         Debug.DrawRay(GetCoordinate(), facing,Color.white,.2f);
         //Debug.Log(hit.transform.tag);
         
-        Debug.Log(hit.transform.tag );
+        //Debug.Log(hit.transform.tag );
 
         
         return hit.collider && (hit.collider.tag == "Mur"|| hit.collider.tag == "MurCassable");
