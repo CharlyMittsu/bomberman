@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerScript : MovableObject
 {
     [SerializeField]
-    private LayerMask hitMask;
+    private LayerMask hitLayer;
     [SerializeField]
     private KeyCode _left ,_right, _up , _down, _leftMouse;
     [SerializeField]
@@ -65,11 +65,14 @@ public class PlayerScript : MovableObject
     }
     private bool Check()
     {
-        RaycastHit2D hit = Physics2D.Raycast(GetCoordinate(), facing, 1,hitMask);
+        RaycastHit2D hit = Physics2D.Raycast(GetCoordinate(), facing, 1,hitLayer);
         Debug.DrawRay(GetCoordinate(), facing,Color.white,.2f);
         //Debug.Log(hit.transform.tag);
-        //Debug.Log(hit.collider && hit.transform.tag == "Mur");
-        return hit.collider && hit.collider.tag == "Mur";
+        
+        Debug.Log(hit.transform.tag );
+
+        
+        return hit.collider && (hit.collider.tag == "Mur"|| hit.collider.tag == "MurCassable");
     }
     private Vector2 getCoordinateFacing()
     {

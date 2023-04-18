@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5602256287258002683}
   - component: {fileID: 1257240634117475165}
   - component: {fileID: 1866573078079748398}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bomb1
-  m_TagString: Untagged
+  m_TagString: MurCassable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4ba9193934bd44b9327c25298e7ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  range: 0
   lifespan: 2
   explosionPrefab: {fileID: 2922159023219094727, guid: cb50831970f36334c8dcaeb861964314, type: 3}
 --- !u!61 &1866573078079748398

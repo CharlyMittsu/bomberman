@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4650893606882212332}
   m_Layer: 3
   m_Name: CrackedWall
-  m_TagString: Mur
+  m_TagString: MurCassable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
