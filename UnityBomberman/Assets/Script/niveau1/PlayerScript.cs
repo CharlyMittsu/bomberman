@@ -11,7 +11,7 @@ public class PlayerScript : MovableObject
     public int _pv;
     [SerializeField]
     private int maxPv;
-    private float iFrame;
+    public float iFrame;
     [SerializeField]
     private float iFrameLength;
     [SerializeField]
@@ -24,10 +24,17 @@ public class PlayerScript : MovableObject
     private BombScript bombPrefab1;
     [SerializeField]
     private Vector2 facing;
+
+    private SpriteRenderer sr;
+    [SerializeField]
+    private GameObject textBegin;
     // Start is called before the first frame update
     void Start()
     {
         _pv = maxPv;
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        StartCoroutine( Blinking());
+        
     }
 
     // Update is called once per frame
@@ -55,6 +62,7 @@ public class PlayerScript : MovableObject
         }
         if (Input.GetKeyDown(_leftMouse))
         {
+            textBegin.SetActive(false);
             if (Check()) 
             { 
                 Debug.Log("je suis face à un collider"); 
@@ -73,6 +81,20 @@ public class PlayerScript : MovableObject
         }
 
 
+    }
+    private IEnumerator Blinking()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (iFrame > 0)
+        {
+            Color defaultColor = sr.color;
+            
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0);
+            yield return new WaitForSeconds(0.1f);
+            sr.color = defaultColor;
+            
+        }
+        StartCoroutine(Blinking());
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

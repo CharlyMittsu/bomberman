@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BombScript : MovableObject
 {
     [SerializeField]
@@ -15,15 +16,18 @@ public class BombScript : MovableObject
     private float life;
     private bool dead;
     [SerializeField]
-    private SpriteRenderer ColorSR;
+    private SpriteRenderer sr;
     [SerializeField]
     private GameObject explosionPrefab;
+
     
+
     // Start is called before the first frame update
     void Start()
     {
         life = lifeSpan;
-        ColorSR = gameObject.GetComponent<SpriteRenderer>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        StartCoroutine(TicTac());
     }
 
     // Update is called once per frame
@@ -41,12 +45,23 @@ public class BombScript : MovableObject
         }
         
     }
+    private IEnumerator TicTac()
+    {
+        
+        var x = 0.5f;
+        if (life < 1) { x = 0.1f; }
+        yield return new WaitForSeconds(x);
+        sr.color = Color.red;
+        yield return new WaitForSeconds(x);
+        sr.color = Color.black;
+        StartCoroutine(TicTac());
+    }
     private IEnumerator BlowUp()
     {
         
         
         
-        ColorSR.enabled = false;
+        sr.enabled = false;
 
         Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
         CreateExplosionLine(Vector2.left);
